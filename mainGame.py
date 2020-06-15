@@ -16,6 +16,7 @@ import random
 pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('飞机大战')
+pygame.mouse.set_visible(False)
 
 # 载入游戏音乐
 bullet_sound = pygame.mixer.Sound('resources/sound/bullet.wav')
@@ -79,14 +80,7 @@ while running:
     # 控制游戏最大帧率为60
     clock.tick(45)
 
-    # 控制发射子弹频率,并发射子弹
-    if not player.is_hit:
-        if shoot_frequency % 15 == 0:
-            bullet_sound.play()
-            player.shoot(bullet_img)
-        shoot_frequency += 1
-        if shoot_frequency >= 15:
-            shoot_frequency = 0
+
 
     # 生成敌机
     if enemy_frequency % 50 == 0:
@@ -179,6 +173,16 @@ while running:
             player.moveLeft()
         if key_pressed[K_d] or key_pressed[K_RIGHT]:
             player.moveRight()
+        if key_pressed[K_SPACE]:
+            # 控制发射子弹频率,并发射子弹
+            if not player.is_hit:
+                if shoot_frequency % 15 == 0:
+                    bullet_sound.play()
+                    player.shoot(bullet_img)
+                shoot_frequency += 1
+                if shoot_frequency >= 15:
+                    shoot_frequency = 0
+
 
 
 font = pygame.font.Font(None, 48)
